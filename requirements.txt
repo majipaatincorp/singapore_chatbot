@@ -1,0 +1,10 @@
+langchain
+langchain-community
+tqdm
+fastapi
+uvicorn
+langchain_huggingface
+langchain-chroma
+python-dotenv
+langchain-google-genai
+langchain-core
