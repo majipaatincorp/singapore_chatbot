@@ -8,3 +8,5 @@ langchain-chroma
 python-dotenv
 langchain-google-genai
 langchain-core
+chainlit
+openai

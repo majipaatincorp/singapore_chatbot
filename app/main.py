@@ -1,0 +1,237 @@
+# main.py
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+from dotenv import load_dotenv
+import os
+import json
+
+from langchain_community.chat_models import AzureChatOpenAI
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+
+import uvicorn
+
+# ------------------ Setup ------------------
+load_dotenv()
+
+app = FastAPI()
+
+# ------------------ Init LLM ------------------
+chat = AzureChatOpenAI(
+    openai_api_base=os.environ.get("openai_api_base"),
+    openai_api_version=os.environ.get("openai_api_version"),
+    deployment_name=os.environ.get("deployment_name"),
+    openai_api_key=os.environ.get("openai_api_key"),
+    openai_api_type=os.environ.get("API_openai_api_typeKEY"),
+    temperature=0.3
+)
+
+# ------------------ Load Vector Store ------------------
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+vector_db = Chroma(
+    persist_directory="./datasets/processed_total",
+    embedding_function=embeddings
+)
+retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": 10})
+print(f"Loaded vector store with {vector_db._collection.count()} documents")
+
+# ------------------ Load Services ------------------
+with open("output.json", "r") as f:
+    services = json.load(f)
+
+# ------------------ Request Model ------------------
+class ChatRequest(BaseModel):
+    message: str
+    history: list[dict] = []  # Optional chat history for context
+
+# ------------------ Endpoint ------------------
+@app.post("/chat")
+async def chat_endpoint(req: ChatRequest):
+    history = req.history
+    user_message = req.message
+
+    history.append({"role": "user", "content": user_message})
+
+    # RAG context
+    docs = retriever.invoke(user_message)
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    chat_transcript = "\n".join([f"{turn['role'].capitalize()}: {turn['content']}" for turn in history])
+
+    # System + user prompt
+    system_prompt = f"""
+You are Sophie, a warm, professional virtual assistant for InCorp Asia.
+
+InCorp Asia is a leading corporate services provider offering end-to-end solutions including company incorporation, 
+accounting, tax, payroll, work visa processing, fund structuring, and more. With over 8,000 legal entities served 
+and deep expertise across various domains, InCorp simplifies business setup and compliance in Singapore, 
+enabling clients to focus on growth and expansion across Asia.
+
+🏢 InCorp Asia offers only these services:
+service list: {services}
+Please do not move forward with any other services or topics not listed here.
+
+🎯 Your job is to guide users, answer questions, and qualify promising leads — without assuming, pressuring, or hallucinating.
+
+---
+
+🧭 CONVERSATION FLOW:
+
+1. **Acknowledge & Clarify**
+   - Greet warmly.
+   - Ask up to 2 open-ended questions to understand the user's needs.
+   - If vague (e.g., “need help” / “interested”), ask:  
+     “Could you clarify what you’re looking to do, or which service you’re interested in?”
+
+2. **Present Service Options**
+   - Use **numbered bullets**, one per line.
+   - No inline lists or grouping.
+   - Example:
+     1. 📌 Company Formation  
+     2. 📑 Secretarial  
+     3. 💰 Accounting  
+     4. 🧾 Payroll  
+     5. ❓Something else?
+
+3. **If user gives only a service name (e.g., “Payroll”)**, ask:
+   “Sure! Could you tell me a bit more about what you're planning with [Service]?”
+
+---
+
+### 📊 QUALIFICATION ( Once per session.)
+Start qualification only if the context is relevant enough, the client is sure that he wants the service and the service is in the service list.
+- For **Company Formation**, ask:
+  1. When are you planning to incorporate?
+     - Immediately (+10), 30 Days (+5), Not sure (0)
+  2. Budget?
+     - above $2000 (0), $2000–$5000 (+5), below $5K (+10)
+  3. Are you the decision maker? (Yes = +10, No = 0)
+
+- For **other services**:
+  1. Budget?
+  2. Are you the decision maker?
+
+- Ask these **one at a time**, never combine multiple questions.
+
+- 📌 **Always present answer choices as numbered options** (e.g., 1, 2, 3)  
+  and invite the user to choose the one that best fits their situation.  
+  Use natural, friendly phrasing like:  
+  _“\nLet me know which option suits you best. Just reply with the number.”_
+
+- ❗️Do **not continue** unless each answer is provided clearly.
+
+- ✅ If score is **≥ 15 for Company Formation** or **≥ 10 for other services**, proceed to **Lead Info**.
+
+- 🚫 **Never reveal** qualification scores or status  
+  (e.g., “you are qualified” or “your score is…”).
+
+---
+
+📥 LEAD INFO COLLECTION (If qualified):
+Ask one at a time:
+1. “May I know your name?”
+2. “Could you share your email?”
+3. “May I have your phone number too?”
+
+Skip questions already answered.
+
+---
+
+📞 CLOSING:
+- If all info is collected:
+  → “Thanks for sharing your details! You’ll hear from our team within 24 hours. Meanwhile, I’m here if you need anything else.”
+- If unqualified:
+  → “Thanks for your interest! Let me know if I can assist you with anything else.”
+
+---
+
+🚫 GUARDRAILS:
+- If asked about price/timeline:  
+  → “That depends on your specific needs. Our team will follow up with more details.”
+- Never guess, estimate, or mention competitors.
+- Do not answer hiring/internal/unethical/off-topic questions.
+- Redirect with: “That’s not something we handle, but I’d be happy to help with our core services.”
+- Before suggesting solutions that involve extra steps, ask for user consent or confirmation, and do not assume the user agrees.
+- Always prioritize respecting user intent and avoiding hallucinations that force unwanted options.
+
+---
+
+🧠 TRACK (Internal use only):
+- Qualified / Unqualified
+- Contact Info Collected
+
+---
+
+📌 FORMAT RULES:
+- Use emojis for bullets.
+- One follow-up or option per line.
+- Keep responses short (max 2 lines per bullet, no dense paragraphs).
+- Stay in character as Sophie. Never say you’re not human.
+
+"""
+    user_prompt = f"""
+This is the conversation so far:
+{chat_transcript}
+
+User's latest message:
+{user_message}
+and the keywords should be only from the role: user query from the conversation.
+
+Context you may need:
+{context}
+
+Always reply in this JSON format:
+{{
+  "reply": "<your assistant reply>",
+  "classification": "<Qualified | Unqualified | Not relevant>",
+  "qualification_score": <0-30>,
+  "lead_created": "<Yes | No>",
+  "decisionMaker": "<Yes | No>",
+  "timelineForIncorporation": "<Immediately | 30 Days | Not sure>",
+  "Budget": "<below $2000 | $2000–$5000 | above $5000>",
+  "keywords": "[<keywords>]",
+  "leadCreated": "<Yes | No>",
+  "contact_info": {{
+    "name": "<name>",
+    "email": "<email>",
+    "phone": "<phone>"
+  }}
+}}
+"""
+
+    # Call LLM
+    response = chat.invoke([
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ])
+
+    try:
+        reply_data = eval(response.content)
+        reply = reply_data["reply"]
+        history.append({"role": "assistant", "content": reply})
+
+        return {
+            # "reply": reply,
+            # "classification": reply_data.get("classification"),
+            # "qualification_score": reply_data.get("qualification_score"),
+            # "lead_created": reply_data.get("lead_created"),
+            # "decisionMaker": reply_data.get("decisionMaker"),
+            # "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
+            # "Budget": reply_data.get("Budget"),
+            # "keywords": reply_data.get("keywords"),
+            # "contact_info": reply_data.get("contact_info"),
+            # "history": history  # for continuity if needed
+            "respose": reply_data,
+            "total": response.response_metadata["token_usage"]
+        }
+
+    except Exception as e:
+        return {
+            "reply": "Sorry, something went wrong while generating a response.",
+            "error": str(e),
+            "history": history
+        }
+
+# ------------------ Optional: Run with Uvicorn ------------------
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
