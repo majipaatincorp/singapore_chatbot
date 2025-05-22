@@ -1,5 +1,5 @@
 # main.py
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Header, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
@@ -10,6 +10,9 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
 import uvicorn
+from app.auth_utils import verify_auth
+
+API_SECRET = 'aforapple'
 
 # ------------------ Setup ------------------
 load_dotenv()
@@ -46,17 +49,34 @@ class ChatRequest(BaseModel):
 
 # ------------------ Endpoint ------------------
 @app.post("/chat")
-async def chat_endpoint(req: ChatRequest):
+async def chat_endpoint(
+    req: ChatRequest, 
+    x_nonce: str = Header(..., description='Unique request nonce'),
+    x_timestamp: str = Header(..., description='UNIX timestamp'),
+    x_signature: str = Header(..., description='Base64-encoded HMAC signature')):
+
     history = req.history
     user_message = req.message
 
-    history.append({"role": "user", "content": user_message})
+    is_valid = verify_auth(
+        payload=req.model_dump(),
+        nonce=x_nonce,
+        timestamp=x_timestamp,
+        signature_b64=x_signature,
+        secret=API_SECRET
+    )
+        # Step 1: verifying authentication
+    if not is_valid:
+        raise HTTPException(
+            status_code = 401,
+            detail = "unauthorized"
+        )
 
     # RAG context
     docs = retriever.invoke(user_message)
     context = "\n\n".join([doc.page_content for doc in docs])
 
-    chat_transcript = "\n".join([f"{turn['role'].capitalize()}: {turn['content']}" for turn in history])
+    chat_transcript = "\n".join([f"{'Bot' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
 
     # System + user prompt
     system_prompt = f"""
@@ -130,8 +150,8 @@ Start qualification only if the context is relevant enough, the client is sure t
 📥 LEAD INFO COLLECTION (If qualified):
 Ask one at a time:
 1. “May I know your name?”
-2. “Could you share your email?”
-3. “May I have your phone number too?”
+2. “May I have your phone number?”
+3. “Could you share your email too?” (verify format)
 
 Skip questions already answered.
 
@@ -185,12 +205,12 @@ Always reply in this JSON format:
   "reply": "<your assistant reply>",
   "classification": "<Qualified | Unqualified | Not relevant>",
   "qualification_score": <0-30>,
-  "lead_created": "<Yes | No>",
+  "lead_created": "<Yes | No>"(if name and email collected yes else no),
   "decisionMaker": "<Yes | No>",
   "timelineForIncorporation": "<Immediately | 30 Days | Not sure>",
   "Budget": "<below $2000 | $2000–$5000 | above $5000>",
-  "keywords": "[<keywords>]",
-  "leadCreated": "<Yes | No>",
+  "keywords": "[<keywords from the role Visitor's message>, <keywords from the role Visitor's context>]", 
+  "shouldYouContact": "<Yes | No>"(Default Yes, if the user does not want to be contacted, set it to No),
   "contact_info": {{
     "name": "<name>",
     "email": "<email>",
@@ -208,28 +228,36 @@ Always reply in this JSON format:
     try:
         reply_data = eval(response.content)
         reply = reply_data["reply"]
-        history.append({"role": "assistant", "content": reply})
+        contact_info = reply_data.get("contact_info", {})
+        email = contact_info.get("email")
+        classification = reply_data.get("classification", "").lower()
+        decisionMaker = reply_data.get("decisionMaker")
+        Budget =  reply_data.get("Budget")
+
+        # Set sendToHubSpot flag
+        if email != "" and classification == "qualified" and decisionMaker != "" and Budget != "":
+            sendToHubspot = "Yes"
+        else:
+            sendToHubspot = "No"
+
 
         return {
-            # "reply": reply,
-            # "classification": reply_data.get("classification"),
-            # "qualification_score": reply_data.get("qualification_score"),
-            # "lead_created": reply_data.get("lead_created"),
-            # "decisionMaker": reply_data.get("decisionMaker"),
-            # "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
-            # "Budget": reply_data.get("Budget"),
-            # "keywords": reply_data.get("keywords"),
-            # "contact_info": reply_data.get("contact_info"),
-            # "history": history  # for continuity if needed
-            "respose": reply_data,
-            "total": response.response_metadata["token_usage"]
+          "reply": reply,
+          "attributes": {
+              "decisionMaker": reply_data.get("decisionMaker"),
+              "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
+              "Budget": reply_data.get("Budget")
+          },
+          "keywords": reply_data.get("keywords"),
+          "contact_info": reply_data.get("contact_info"),
+          "sendToHubspot": sendToHubspot,
+          "shouldYouContact": reply_data.get("shouldYouContact"),
         }
 
     except Exception as e:
         return {
             "reply": "Sorry, something went wrong while generating a response.",
             "error": str(e),
-            "history": history
         }
 
 # ------------------ Optional: Run with Uvicorn ------------------

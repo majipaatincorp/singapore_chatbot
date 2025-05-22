@@ -17,7 +17,8 @@ from langchain_community.document_transformers import (
 
 # Configuration
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"  # Lightweight but effective
-PERSIST_DIR = "./datasets/processed"  # Where Chroma will store data
+# PERSIST_DIR = "./datasets/processed"  # Where Chroma will store data
+PERSIST_DIR = "./datasets/processed_total"  # Where Chroma will store data
 
 
 def get_embedding_device():
@@ -71,7 +72,8 @@ def process_all_documents(md_files):
 def db_created():
     """Creates the vector DB if it doesn't exist."""
     print("Creating new vector DB...")
-    md_files = glob.glob("./datasets/raw_data/*.md")
+    # md_files = glob.glob("./datasets/raw_data/*.md")
+    md_files = glob.glob("./datasets/total/*.md")
 
     if not md_files:
         raise FileNotFoundError("No markdown files found in the specified directory.")
