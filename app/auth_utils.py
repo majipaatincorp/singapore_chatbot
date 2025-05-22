@@ -21,7 +21,7 @@ def verify_auth(payload: dict, nonce: str, timestamp: str, signature_b64: str, s
     """
     try:
         # Deterministically serialize JSON (sorted keys, no whitespace)
-        serialized_payload  = json.dumps(payload, separators=(',', ':'), sort_keys=True)
+        serialized_payload  = json.dumps(payload, separators=(',', ':'), sort_keys=True,  ensure_ascii=False)
         concatenated_payload = nonce+timestamp+serialized_payload
 
         expected_signature  = hmac.new(

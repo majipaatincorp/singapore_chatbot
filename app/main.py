@@ -69,10 +69,10 @@ async def chat_endpoint(
     )
     # verifying authentication
     if not is_valid:
-        logger.warning("Unauthorized access: API key verification failed.")
+        logger.error("Unauthorized access: API key verification failed.")
         raise HTTPException(
             status_code = 401,
-            detail = "unauthorized"
+            detail = "Unauthorized access: Authorization failed."
         )
 
     try:

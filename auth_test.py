@@ -29,115 +29,34 @@ API_SECRET = "5z1OCulNuL8MA4qTzr9g9xRvM3VwiJSPHdmqXOgAqWM0mcYotxsWJQQJ99BEACHYHv
 
 # Fake request body (as Pydantic would model_dump())
 payload = {
-  "message": "i want to start a business after 30 dayus, my budget is 10000 dollars and i am the decision maker but dont call me",
-  "history": [
-    {
-      "user_type": "bot",
-      "text": "Hello! I’m Sophie. I can help with:\n\n📌 Company Formation & Compliance \n📊 Accounting & Taxation \n📑 Corporate Secretarial Services \n💰 Finance, HR & Payroll \n✈️ Immigration Services \n🛡️ Risk Management \n🔏 IP, Trademarks & Business Advisory\n\nHow can I assist you today?",
-      "timestamp": "2025-05-22T03:47:01.001Z",
-      "delay": 500,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "Hi",
-      "timestamp": "2025-05-22T03:47:04.387Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "Hello! How can I assist you today?",
-      "timestamp": "2025-05-22T03:47:04.387Z",
-      "delay": 100,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "Need Dell amc quote in Singapore.",
-      "timestamp": "2025-05-22T03:47:11.467Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "Could you please provide more details about the Dell AMC you need a quote for in Singapore, such as the product model and service duration? This will help us offer you an accurate and tailored quote.",
-      "timestamp": "2025-05-22T03:47:11.467Z",
-      "delay": 100,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "Let me know if you support us",
-      "timestamp": "2025-05-22T03:47:20.782Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "To help you get started, may I have your name?",
-      "timestamp": "2025-05-22T03:47:20.782Z",
-      "delay": 2000,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "Could you please share email id I'll share Requirement details with you",
-      "timestamp": "2025-05-22T03:47:30.946Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "Thank you Could you please share email id I'll share Requirement details with you, next I would need your email address in case this chat disconnects.",
-      "timestamp": "2025-05-22T03:47:30.946Z",
-      "delay": 2000,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "Rishita Sharma. Email id - rishita.sharma@axiomtechnologies.com",
-      "timestamp": "2025-05-22T03:47:41.914Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot_button",
-      "text": "Which area of support are you looking for?",
-      "timestamp": "2025-05-22T03:47:41.914Z",
-      "delay": 2000,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "No one of the above",
-      "timestamp": "2025-05-22T03:48:05.831Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "Thank you for your response. Could you please specify the type of support or service you are looking for? This will help me assist you better. If you have any particular requirements or questions, feel free to share them.",
-      "timestamp": "2025-05-22T03:48:05.831Z",
-      "delay": 100,
-      "contact_owner": "Chatbot"
-    },
-    {
-      "user_type": "visitor",
-      "text": "I'm looking annual maintaince service in Singapore for Dell product",
-      "timestamp": "2025-05-22T03:49:25.917Z",
-      "contact_owner": "Maheshwar Arulraj"
-    },
-    {
-      "user_type": "bot",
-      "text": "Could you please specify the Dell product model and the desired duration for the annual maintenance service in Singapore? This will help us provide you with an accurate and tailored quote.",
-      "timestamp": "2025-05-22T03:49:25.917Z",
-      "delay": 100,
-      "contact_owner": "Chatbot"
-    }
-]
+    "history": [
+        {
+            "user_type": "bot",
+            "text": "Hello! I’m Sophie. I can help with",
+            "timestamp": "2025-05-22T14:27:44.954Z",
+            "delay": 500,
+            "contact_owner": "Chatbot"
+        },
+        {
+            "user_type": "bot",
+            "text": "hello!",
+            "timestamp": "2025-05-22T14:27:44.954Z",
+            "delay": 2000,
+            "contact_owner": "Chatbot"
+        }
+    ],
+    "message": "Hey sophie!!@#$$%^&*(){}[]:;'></é“\n"
 }
 
+ 
+
 # Header fields just for testing
-nonce = "e795e65add1b10adf6f2315e81fa26b7"  # Should be unique per request
-timestamp = str(int(1747120885)) # UNIX timestamp
+nonce = "c2a6028e63cdbc74fe5cc6f537d452a3"  # Should be unique per request
+timestamp = str(int(1747923485124)) # UNIX timestamp
 
 # Serialize and concatenate payload
-message = json.dumps(payload, separators=(',', ':'), sort_keys=True)
+message = json.dumps(payload, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
+print(message)
 concatenated = nonce+timestamp+message
 
 # Create signature
