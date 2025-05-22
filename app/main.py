@@ -25,7 +25,7 @@ chat = AzureChatOpenAI(
     openai_api_version=os.environ.get("openai_api_version"),
     deployment_name=os.environ.get("deployment_name"),
     openai_api_key=os.environ.get("openai_api_key"),
-    openai_api_type=os.environ.get("API_openai_api_typeKEY"),
+    openai_api_type=os.environ.get("openai_api_type"),
     temperature=0.3
 )
 
