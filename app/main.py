@@ -11,8 +11,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 import uvicorn
 from app.auth_utils import verify_auth
+from app.logger import logger
 
-API_SECRET = 'aforapple'
 
 # ------------------ Setup ------------------
 load_dotenv()
@@ -28,6 +28,8 @@ chat = AzureChatOpenAI(
     openai_api_type=os.environ.get("API_openai_api_typeKEY"),
     temperature=0.3
 )
+
+API_SECRET = os.environ.get("API_SECRET")
 
 # ------------------ Load Vector Store ------------------
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
@@ -65,18 +67,25 @@ async def chat_endpoint(
         signature_b64=x_signature,
         secret=API_SECRET
     )
-        # Step 1: verifying authentication
+    # verifying authentication
     if not is_valid:
+        logger.warning("Unauthorized access: API key verification failed.")
         raise HTTPException(
             status_code = 401,
             detail = "unauthorized"
         )
 
-    # RAG context
-    docs = retriever.invoke(user_message)
-    context = "\n\n".join([doc.page_content for doc in docs])
+    try:
+        # RAG context
+        docs = retriever.invoke(user_message)
+        context = "\n\n".join([doc.page_content for doc in docs])
 
-    chat_transcript = "\n".join([f"{'Bot' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
+        chat_transcript = "\n".join([f"{'Bot' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
+    except Exception as e:
+        # Log the error with traceback
+        logger.error(f"Error while generating RAG context or chat transcript {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Internal server error while processing the request.")
+
 
     # System + user prompt
     system_prompt = f"""
@@ -173,7 +182,8 @@ Skip questions already answered.
 - Redirect with: “That’s not something we handle, but I’d be happy to help with our core services.”
 - Before suggesting solutions that involve extra steps, ask for user consent or confirmation, and do not assume the user agrees.
 - Always prioritize respecting user intent and avoiding hallucinations that force unwanted options.
-
+- Only respond to the user query that are in English. If the user query is in a different language, 
+Strictly respond with "I'm sorry, but I can only assist with questions in English. Could you please rephrase your question in English?"
 ---
 
 🧠 TRACK (Internal use only):
@@ -220,10 +230,14 @@ Always reply in this JSON format:
 """
 
     # Call LLM
-    response = chat.invoke([
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt}
-    ])
+    try:
+      response = chat.invoke([
+          {"role": "system", "content": system_prompt},
+          {"role": "user", "content": user_prompt}
+      ])
+    except Exception as e:
+        logger.error("Error invoking chat model", exc_info=True)
+        raise HTTPException(status_code=500, detail="Internal server error while processing the request.")
 
     try:
         reply_data = eval(response.content)
@@ -255,10 +269,12 @@ Always reply in this JSON format:
         }
 
     except Exception as e:
+        logger.exception(f"Failed to parse LLM response\n error: {e}")
         return {
-            "reply": "Sorry, something went wrong while generating a response.",
+            "reply": "Sorry, something went wrong please try again later.",
             "error": str(e),
         }
+    
 
 # ------------------ Optional: Run with Uvicorn ------------------
 if __name__ == "__main__":

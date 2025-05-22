@@ -8,7 +8,7 @@ import time
 def verify_auth(payload: dict, nonce: str, timestamp: str, signature_b64: str, secret: str):
     try:
         message = json.dumps(payload, separators=(',', ':'), sort_keys=True)
-        concatenated_payload = f"{nonce}:{timestamp}:{message}"
+        concatenated_payload = nonce+timestamp+message
 
         expected_hmac = hmac.new(
             key=secret.encode(),
@@ -25,7 +25,7 @@ def verify_auth(payload: dict, nonce: str, timestamp: str, signature_b64: str, s
 
 # ------------------- Sample Test Client -------------------
 # Shared secret key
-API_SECRET = 'aforapple'
+API_SECRET = "5z1OCulNuL8MA4qTzr9g9xRvM3VwiJSPHdmqXOgAqWM0mcYotxsWJQQJ99BEACHYHv6XJ3w3AAAAACOGm8RX" 
 
 # Fake request body (as Pydantic would model_dump())
 payload = {
@@ -132,13 +132,13 @@ payload = {
 ]
 }
 
-# Header fields
+# Header fields just for testing
 nonce = "e795e65add1b10adf6f2315e81fa26b7"  # Should be unique per request
-timestamp = str(1747120885) # UNIX timestamp
+timestamp = str(int(1747120885)) # UNIX timestamp
 
 # Serialize and concatenate payload
 message = json.dumps(payload, separators=(',', ':'), sort_keys=True)
-concatenated = f"{nonce}:{timestamp}:{message}"
+concatenated = nonce+timestamp+message
 
 # Create signature
 signature = hmac.new(

@@ -2,7 +2,7 @@ import hashlib
 import base64
 import json
 import hmac
-
+from app.logger import logger
 
 
 def verify_auth(payload: dict, nonce: str, timestamp: str, signature_b64: str, secret: str):
@@ -21,17 +21,18 @@ def verify_auth(payload: dict, nonce: str, timestamp: str, signature_b64: str, s
     """
     try:
         # Deterministically serialize JSON (sorted keys, no whitespace)
-        message = json.dumps(payload, separators=(',', ':'), sort_keys=True)
-        concatenated_payload = f"{nonce}:{timestamp}:{message}"
+        serialized_payload  = json.dumps(payload, separators=(',', ':'), sort_keys=True)
+        concatenated_payload = nonce+timestamp+serialized_payload
 
-        expected_hmac = hmac.new(
+        expected_signature  = hmac.new(
             key=secret.encode(),
             msg=concatenated_payload.encode(),
             digestmod=hashlib.sha256
         ).digest()
 
-        received_hmac = base64.b64decode(signature_b64)
+        received_signature  = base64.b64decode(signature_b64)
 
-        return hmac.compare_digest(received_hmac, expected_hmac)
-    except Exception:
+        return hmac.compare_digest(received_signature , expected_signature)
+    except Exception as e:
+        logger.error(f"Error verifying HMAC signature: {e}", exc_info=True)
         return False
