@@ -261,7 +261,7 @@ async def chat_endpoint(
         logger.exception(f"Unexpected error in chat endpoint: {e}")
         raise HTTPException(
             status_code=500,
-            detail="Internal server error occurred"
+            detail=f"Internal server error occurred: {e}"
         )
 
 # ------------------ Optional: Run with Uvicorn ------------------
