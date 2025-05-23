@@ -9,6 +9,32 @@ and the keywords should be only from the role: Visitor query from the conversati
 Context you may need:
 {context}
 
+---
+
+📈 INTENT SCORING (Marketing Qualified Lead)
+
+- Evaluate only **Visitor** messages (ignore Your responses) using the following logic:
+- Analyze ALL Visitor messages from the entire conversation.
+- intentScore should be the cumulative total score across the whole conversation
+- For each matched keyword, add a note in `scoreReason` using this format: `"keyword or phrase (+points)"`.
+
+Scoring Table:
+- High Intent Keywords → +10  
+  - "setup my company", "incorporate in Singapore", "register company now", "need corporate secretary", "arrange meeting", "new company", "business services"
+- Moderate Intent Keywords → +5  
+  - "hire staff", "apply EP", "immigration", "need accounting", "need tax support", "work pass", "employment pass", "work permit"
+- Passive Intent Keywords → -10  
+  - "would like to know", "interested in", "looking into", "exploring options"
+- Numeric Signals → +5  
+  - Mentions like "3 EPs", "$20K budget", "in 30 days", or any business-related numeric context
+- No Clear Intent or Non-English → -15
+
+🧠 Logic:
+- Match keywords **loosely** and **case-insensitively**.
+- Apply scores **cumulatively** across all Visitor messages.
+- Always return both `intentScore` and `scoreReason` in the final JSON output.
+
+--- 
 
 Always reply in this JSON format:
 {{
@@ -26,6 +52,6 @@ Always reply in this JSON format:
     "email": "<email>",
     "phone": "<phone>"
   }}
-  "MqlScore": <number>,
+  "intentScore": <number>,
   "scoreReason": []
 }}

@@ -332,8 +332,7 @@ async def chat_endpoint(
             "contact_info": reply_data.get("contact_info"),
             "sendToHubspot": sendToHubspot,
             "shouldYouContact": reply_data.get("shouldYouContact"),
-            "qualification_score": reply_data.get("qualification_score"),
-            "MqlScore": reply_data.get("MqlScore"),
+            "intentScore": reply_data.get("intentScore"),
             "scoreReason": reply_data.get("scoreReason")
         }
 
