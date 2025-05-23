@@ -1,3 +1,8 @@
 2025-05-22 14:46:53,520 - WARNING - chatbot_logger - Unauthorized access: API key verification failed.
 2025-05-22 14:47:53,765 - WARNING - chatbot_logger - Unauthorized access: API key verification failed.
 2025-05-22 16:02:57,988 - WARNING - chatbot_logger - Unauthorized access: API key verification failed.
+2025-05-23 11:13:05,038 - ERROR - chatbot_logger - Missing required header: x-signature
+2025-05-23 11:13:09,392 - ERROR - chatbot_logger - Missing required header: x-timestamp
+2025-05-23 11:13:13,653 - ERROR - chatbot_logger - Missing required header: x-nonce
+2025-05-23 11:13:34,827 - ERROR - chatbot_logger - Missing or empty message in request
+2025-05-23 11:14:02,504 - ERROR - chatbot_logger - Unauthorized access: API key verification failed.

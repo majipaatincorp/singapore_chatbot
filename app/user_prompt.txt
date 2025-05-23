@@ -1,0 +1,27 @@
+This is the conversation so far:
+{chat_transcript}
+
+User's latest message:
+{user_message}
+and the keywords should be only from the role: user query from the conversation.
+
+Context you may need:
+{context}
+
+Always reply in this JSON format:
+{{
+  "reply": "<your assistant reply>",
+  "classification": "<Qualified | Unqualified | Not relevant>",
+  "qualification_score": <0-30>,
+  "lead_created": "<Yes | No>"(if name and email collected yes else no),
+  "decisionMaker": "<Yes | No or empty string if not mentioned>",
+  "timelineForIncorporation": "<Immediately | 30 Days | Not sure or empty string if not mentioned>",
+  "Budget": "<below $2000 | $2000–$5000 | above $5000 or empty string if not mentioned>",
+  "keywords": "[<keywords from the role Visitor's message>, <keywords from the role Visitor's context>]", 
+  "shouldYouContact": "<Yes | No>"(Default Yes, if the user does not want to be contacted, set it to No),
+  "contact_info": {{
+    "name": "<name>",
+    "email": "<email>",
+    "phone": "<phone>"
+  }}
+}}

@@ -45,7 +45,7 @@ payload = {
             "contact_owner": "Chatbot"
         }
     ],
-    "message": "Hey sophie!!@#$$%^&*(){}[]:;'></é“\n"
+    "message": "Hey mate"
 }
 
  
