@@ -195,11 +195,18 @@ async def chat_endpoint(
 
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
 
-        # Call LLM
-        response = chat.invoke([
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ])
+        try:
+            # Call LLM
+            response = chat.invoke([
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ])
+        except Exception as e:
+            logger.error(f"LLM invocation failed: {e}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to generate response from AI model: {e}"
+            )
 
         if not response or not response.content:
             logger.error("LLM returned empty response")
@@ -253,9 +260,6 @@ async def chat_endpoint(
             "qualification_score": reply_data.get("qualification_score")
         }
 
-    except HTTPException:
-        # Re-raise HTTPExceptions as they are already properly formatted
-        raise
     except Exception as e:
         # Catch any other unexpected errors
         logger.exception(f"Unexpected error in chat endpoint: {e}")

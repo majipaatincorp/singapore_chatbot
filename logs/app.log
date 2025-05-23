@@ -17,3 +17,18 @@
 2025-05-23 12:33:48,786 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
                     response_format was transferred to model_kwargs.
                     Please confirm that response_format is what you intended.
+2025-05-23 13:45:24,702 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 13:46:29,926 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 13:48:03,256 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 13:52:39,246 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 13:53:55,671 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
