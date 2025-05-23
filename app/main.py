@@ -206,7 +206,7 @@ async def chat_endpoint(
 
         # Prepare chat transcript
         app_logger.info("Preparing chat transcript...")
-        chat_transcript = "\n".join([f"{'chat' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
+        chat_transcript = "\n".join([f"{'You' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
         app_logger.info(f"Chat transcript length: {len(chat_transcript)} characters")
 
         # Try to read system prompt
@@ -332,7 +332,9 @@ async def chat_endpoint(
             "contact_info": reply_data.get("contact_info"),
             "sendToHubspot": sendToHubspot,
             "shouldYouContact": reply_data.get("shouldYouContact"),
-            "qualification_score": reply_data.get("qualification_score")
+            "qualification_score": reply_data.get("qualification_score"),
+            "MqlScore": reply_data.get("MqlScore"),
+            "scoreReason": reply_data.get("scoreReason")
         }
 
         app_logger.info("=== Chat request completed successfully ===")

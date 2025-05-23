@@ -1,12 +1,14 @@
 This is the conversation so far:
 {chat_transcript}
+in the chat transcript you are "You" and the user is "Visitor"
 
 User's latest message:
 {user_message}
-and the keywords should be only from the role: user query from the conversation.
+and the keywords should be only from the role: Visitor query from the conversation.
 
 Context you may need:
 {context}
+
 
 Always reply in this JSON format:
 {{
@@ -24,4 +26,6 @@ Always reply in this JSON format:
     "email": "<email>",
     "phone": "<phone>"
   }}
+  "MqlScore": <number>,
+  "scoreReason": []
 }}
