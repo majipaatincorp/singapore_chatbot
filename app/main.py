@@ -26,8 +26,10 @@ chat = AzureChatOpenAI(
     deployment_name=os.environ.get("deployment_name"),
     openai_api_key=os.environ.get("openai_api_key"),
     openai_api_type=os.environ.get("openai_api_type"),
-    temperature=0.3
+    temperature=0.3,
+    response_format={"type": "json_object"}
 )
+
 
 API_SECRET = os.environ.get("API_SECRET")
 
@@ -209,6 +211,7 @@ async def chat_endpoint(
         # Parse LLM response (replacing dangerous eval())
         try:
             reply_data = json.loads(response.content)
+
         except json.JSONDecodeError:
             logger.error("Failed to parse LLM response as JSON")
             raise HTTPException(
@@ -247,6 +250,7 @@ async def chat_endpoint(
             "contact_info": reply_data.get("contact_info"),
             "sendToHubspot": sendToHubspot,
             "shouldYouContact": reply_data.get("shouldYouContact"),
+            "qualification_score": reply_data.get("qualification_score")
         }
 
     except HTTPException:

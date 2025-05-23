@@ -6,3 +6,14 @@
 2025-05-23 11:13:13,653 - ERROR - chatbot_logger - Missing required header: x-nonce
 2025-05-23 11:13:34,827 - ERROR - chatbot_logger - Missing or empty message in request
 2025-05-23 11:14:02,504 - ERROR - chatbot_logger - Unauthorized access: API key verification failed.
+2025-05-23 12:11:05,539 - ERROR - chatbot_logger - Failed to parse LLM response as JSON
+2025-05-23 12:22:22,464 - ERROR - chatbot_logger - Failed to parse LLM response as JSON
+2025-05-23 12:29:53,205 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 12:31:20,154 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-23 12:33:48,786 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
