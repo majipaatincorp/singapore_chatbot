@@ -75,6 +75,7 @@ Ask one at a time:
 1. “May I know your name?”
 2. “May I have your phone number?”
 3. “Could you share your email too?” (verify format)
+- Always ask all the lead info collection questions
 
 Skip questions already answered.
 

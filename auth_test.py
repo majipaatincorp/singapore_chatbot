@@ -30,23 +30,57 @@ API_SECRET = "5z1OCulNuL8MA4qTzr9g9xRvM3VwiJSPHdmqXOgAqWM0mcYotxsWJQQJ99BEACHYHv
 # Fake request body (as Pydantic would model_dump())
 payload = {
     "history": [
-        {
-            "user_type": "bot",
-            "text": "Hello! I’m Sophie. I can help with",
-            "timestamp": "2025-05-22T14:27:44.954Z",
-            "delay": 500,
-            "contact_owner": "Chatbot"
-        },
-        {
-            "user_type": "bot",
-            "text": "hello!",
-            "timestamp": "2025-05-22T14:27:44.954Z",
-            "delay": 2000,
-            "contact_owner": "Chatbot"
-        }
-    ],
-    "message": "Hey mate"
+  {
+    "user_type": "chat",
+    "text": "Hello! I'm Sophie. I can help with:\n📌 Company Formation & Compliance \n📊 Accounting & Taxation \n📑 Corporate Secretarial Services \n💰 Finance, HR & Payroll \n✈️ Immigration Services \n🛡️ Risk Management \n🔏 IP, Trademarks & Business Advisory\nHow can I assist you today?",
+    "timestamp": "2025-05-23T08:36:43.641Z",
+    "delay": 500,
+    "contact_owner": "Sophie" 
+  },
+  {
+    "user_type": "visitor",
+    "text": "incorporation in singapore",
+    "timestamp": "2025-05-23T08:37:00.602Z",
+    "contact_owner": "Visitor" 
+  },
+  {
+    "user_type": "chat",
+    "text": "Thank you for your interest in incorporating a company in Singapore! Could you share when you're planning to incorporate? \n1. Immediately \n2. Within 30 Days \n3. Not sure",
+    "timestamp": "2025-05-23T08:37:00.602Z",
+    "delay": 2000,
+    "contact_owner": "Sophie" 
+  },
+  {
+    "user_type": "visitor",
+    "text": "1",
+    "timestamp": "2025-05-23T08:37:09.648Z",
+    "contact_owner": "Visitor" 
+  },
+  {
+    "user_type": "chat",
+    "text": "I'm sorry, I didn't quite catch that. Could you clarify or provide more details?",
+    "timestamp": "2025-05-23T08:37:09.648Z",
+    "delay": 1500,
+    "contact_owner": "Sophie" 
+  },
+  {
+    "user_type": "visitor",
+    "text": "I want to incorporate my company immediately",
+    "timestamp": "2025-05-23T08:39:32.667Z",
+    "contact_owner": "Visitor" 
+  },
+  {
+    "user_type": "chat",
+    "text": "I want to make sure I'm giving you the best answer, but I didn't quite get that.",
+    "timestamp": "2025-05-23T08:39:32.667Z",
+    "delay": 1500,
+    "contact_owner": "Sophie"
+  }
+]
+ ,
+    "message": "3"
 }
+
 
  
 
