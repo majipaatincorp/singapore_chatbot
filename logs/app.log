@@ -98,3 +98,207 @@
 2025-05-23 16:46:00,281 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
                     response_format was transferred to model_kwargs.
                     Please confirm that response_format is what you intended.
+2025-05-23 17:12:59,705 - WARNING - langchain_community.chat_models.openai - WARNING! response_format is not default parameter.
+                    response_format was transferred to model_kwargs.
+                    Please confirm that response_format is what you intended.
+2025-05-24 16:03:12,642 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 16:03:12,643 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 16:03:12,643 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 16:03:13,369 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 16:03:13,369 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 16:03:13,369 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 16:03:25,151 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 16:03:25,152 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 16:03:25,294 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 16:03:25,295 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 16:03:25,348 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 16:03:25,348 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 16:03:25,349 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 16:03:25,349 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 16:03:25,349 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 16:03:25,349 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 16:03:25,361 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:01:43,670 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:01:43,671 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:01:43,671 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:01:44,281 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:01:44,281 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:01:44,281 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:01:53,950 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 19:01:53,951 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 19:01:54,050 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 19:01:54,050 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 19:01:54,110 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 19:01:54,110 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 19:01:54,118 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 19:01:54,118 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 19:01:54,128 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 19:01:54,129 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 19:01:54,130 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:02:03,833 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:02:03,833 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:02:03,833 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:02:03,833 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:02:04,011 - ERROR - chatbot_logger - Unexpected error in chat endpoint: module 'datetime' has no attribute 'fromisoformat'
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\projects\Fullon_chatbot\app\main_.py", line 212, in chat_endpoint
+    chat_transcript = "Chat History:\n" + "\n".join(
+                                          ^^^^^^^^^^
+  File "C:\Users\Administrator\Documents\projects\Fullon_chatbot\app\main_.py", line 213, in <genexpr>
+    f"[{datetime.fromisoformat(msg['timestamp'].replace('Z', '+00:00')).strftime('%H:%M')}] "
+        ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'fromisoformat'
+2025-05-24 19:02:25,847 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:02:25,847 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:02:25,847 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:02:25,847 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:02:25,859 - ERROR - chatbot_logger - Unexpected error in chat endpoint: module 'datetime' has no attribute 'fromisoformat'
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\projects\Fullon_chatbot\app\main_.py", line 212, in chat_endpoint
+    chat_transcript = "Chat History:\n" + "\n".join(
+                                          ^^^^^^^^^^
+  File "C:\Users\Administrator\Documents\projects\Fullon_chatbot\app\main_.py", line 213, in <genexpr>
+    f"[{datetime.fromisoformat(msg['timestamp'].replace('Z', '+00:00')).strftime('%H:%M')}] "
+        ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'fromisoformat'
+2025-05-24 19:02:35,524 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:02:35,524 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:02:35,524 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:02:36,082 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:02:36,084 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:02:36,084 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:02:45,460 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 19:02:45,462 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 19:02:45,596 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 19:02:45,596 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 19:02:45,622 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 19:02:45,622 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 19:02:45,622 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 19:02:45,622 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 19:02:45,624 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 19:02:45,624 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 19:02:45,624 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:02:48,308 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:02:48,308 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:02:48,308 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:02:48,310 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:02:51,817 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:02:57,204 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:02:57,205 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:02:57,205 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:02:57,205 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:03:00,114 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:03:03,893 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:03:03,894 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:03:03,894 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:03:03,894 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:03:05,873 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:03:08,759 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:03:08,760 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:03:08,760 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:03:08,760 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:03:11,732 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:05:33,650 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:05:33,650 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:05:33,650 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:05:34,353 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:05:34,353 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:05:34,353 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:05:45,132 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 19:05:45,134 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 19:05:45,239 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 19:05:45,239 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 19:05:45,266 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 19:05:45,267 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 19:05:45,267 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 19:05:45,267 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 19:05:45,267 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 19:05:45,268 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 19:05:45,268 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:05:48,010 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:05:48,010 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:05:48,010 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:05:48,010 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:05:51,505 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:07:14,241 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:07:14,241 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:07:14,242 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:07:14,242 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:07:14,242 - ERROR - chatbot_logger - Unauthorized access: API key verification failed.
+2025-05-24 19:07:14,242 - ERROR - chatbot_logger - HTTP Exception: 401 - Unauthorized access: Authorization failed.
+2025-05-24 19:09:42,803 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:09:42,803 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:09:42,803 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:09:42,803 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:12:07,730 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:12:07,730 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:12:07,730 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:12:08,317 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:12:08,317 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:12:08,317 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:12:37,263 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 19:12:37,263 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 19:12:37,344 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 19:12:37,344 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 19:12:37,367 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 19:12:37,367 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 19:12:37,367 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 19:12:37,367 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 19:12:37,368 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 19:12:37,368 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 19:12:37,368 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:13:06,552 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:13:06,552 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:13:06,552 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:13:06,552 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:19:22,035 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:19:22,036 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:19:22,036 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:19:22,841 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:19:22,841 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:19:22,841 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:23:26,921 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:23:26,921 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:23:26,921 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:23:27,459 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:23:27,459 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:23:27,461 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:37:22,114 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:37:22,116 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:37:22,116 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:37:22,824 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:37:22,824 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:37:22,824 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:38:18,735 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:38:18,737 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:38:18,737 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:38:19,238 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:38:19,238 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:38:19,238 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:44:53,660 - INFO - chatbot_logger - Environment variables loaded
+2025-05-24 19:44:53,660 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-24 19:44:53,660 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-24 19:44:54,170 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-24 19:44:54,170 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-24 19:44:54,170 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-24 19:45:03,078 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-24 19:45:03,080 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-24 19:45:03,227 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-24 19:45:03,227 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-24 19:45:03,310 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-24 19:45:03,311 - INFO - chatbot_logger - Loading services configuration...
+2025-05-24 19:45:03,311 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-24 19:45:03,311 - INFO - chatbot_logger - Loading system prompt...
+2025-05-24 19:45:03,311 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-24 19:45:03,312 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-24 19:45:03,312 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-24 19:45:26,182 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:45:26,182 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:45:26,182 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:45:26,183 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:45:29,625 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-24 19:50:16,838 - INFO - chatbot_logger - === New chat request received ===
+2025-05-24 19:50:16,838 - INFO - chatbot_logger - Message length: 1
+2025-05-24 19:50:16,838 - INFO - chatbot_logger - History length: 7
+2025-05-24 19:50:16,838 - INFO - chatbot_logger - Processing message: '3'
+2025-05-24 19:50:20,293 - INFO - chatbot_logger - LLM response parsed successfully

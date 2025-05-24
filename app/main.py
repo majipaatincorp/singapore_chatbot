@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 import json
+from datetime import datetime
 
 from langchain_community.chat_models import AzureChatOpenAI
 from langchain_chroma import Chroma
@@ -207,7 +208,11 @@ async def chat_endpoint(
         context = "\n\n".join([doc.page_content for doc in docs])
 
         # Prepare chat transcript
-        chat_transcript = "\n".join([f"{'You' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
+        chat_transcript = "Chat History:\n" + "\n".join(
+            f"[{datetime.fromisoformat(msg['timestamp'].replace('Z', '+00:00')).strftime('%H:%M')}] "
+            f"{'You' if msg['user_type'] in ['bot', 'bot_button'] else 'Visitor'}: {msg['text'].strip()}"
+            for msg in req.history
+        )
 
         if not system_prompt_template or system_prompt_template.strip() == "":
             app_logger.error("System prompt is empty")
@@ -226,7 +231,7 @@ async def chat_endpoint(
             )
 
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
-
+        print(user_prompt)
         # Call LLM
         try:
             response = chat.invoke([
