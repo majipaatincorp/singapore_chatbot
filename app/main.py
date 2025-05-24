@@ -4,29 +4,15 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 import json
-import logging
-import sys
 
 from langchain_community.chat_models import AzureChatOpenAI
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-import uvicorn
 from app.auth_utils import verify_auth
 from app.logger import logger
 
-# ------------------ Setup Logging ------------------
-# Configure root logger to print to terminal
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)  # Print to terminal
-    ]
-)
-
-# Create a logger for this module
-app_logger = logging.getLogger(__name__)
+app_logger = logger 
 
 # ------------------ Setup ------------------
 load_dotenv()
@@ -107,6 +93,32 @@ except Exception as e:
     app_logger.error(f"Error loading services configuration: {e}")
     raise RuntimeError(f"Failed to load services configuration: {e}")
 
+# Try to read system prompt
+app_logger.info("Loading system prompt...")
+try:
+    with open('app/system_prompt.txt', 'r', encoding='utf-8') as f:
+        system_prompt_template = f.read()
+    app_logger.info("System prompt loaded successfully")
+except (FileNotFoundError, IOError, PermissionError) as e:
+    app_logger.error(f"Failed to read system prompt file: {e}")
+    raise HTTPException(
+        status_code=500,
+        detail="Failed to load system prompt configuration"
+    )
+
+# Try to read user prompt
+app_logger.info("Loading user prompt template...")
+try:
+    with open('app/user_prompt.txt', 'r', encoding='utf-8') as f:
+        user_prompt_template = f.read()
+    app_logger.info("User prompt template loaded successfully")
+except (FileNotFoundError, IOError, PermissionError) as e:
+    app_logger.error(f"Failed to read user prompt file: {e}")
+    raise HTTPException(
+        status_code=500,
+        detail="Failed to load user prompt configuration"
+    )
+
 # ------------------ Request Model ------------------
 class ChatRequest(BaseModel):
     message: str
@@ -126,7 +138,6 @@ async def chat_endpoint(
     
     try:
         # Check if headers are missing
-        app_logger.info("Validating request headers...")
         if x_nonce is None:
             app_logger.error("Missing required header: x-nonce")
             raise HTTPException(
@@ -148,10 +159,7 @@ async def chat_endpoint(
                 detail="Missing required header: x-signature"
             )
         
-        app_logger.info("All required headers present")
-
         # Check if message is missing or empty
-        app_logger.info("Validating request message...")
         if not req.message or req.message.strip() == "":
             app_logger.error("Missing or empty message in request")
             raise HTTPException(
@@ -172,7 +180,6 @@ async def chat_endpoint(
         app_logger.info(f"Processing message: '{user_message[:100]}{'...' if len(user_message) > 100 else ''}'")
 
         # Verify authentication
-        app_logger.info("Verifying authentication...")
         is_valid = verify_auth(
             payload=req.model_dump(),
             nonce=x_nonce,
@@ -188,10 +195,7 @@ async def chat_endpoint(
                 detail="Unauthorized access: Authorization failed."
             )
         
-        app_logger.info("Authentication successful")
-
         # Try to retrieve documents
-        app_logger.info("Retrieving relevant documents from vector database...")
         docs = retriever.invoke(user_message)
         if not docs:
             app_logger.error("Failed to retrieve documents from vector database")
@@ -200,50 +204,19 @@ async def chat_endpoint(
                 detail="Failed to retrieve relevant documents"
             )
 
-        app_logger.info(f"Retrieved {len(docs)} relevant documents")
         context = "\n\n".join([doc.page_content for doc in docs])
-        app_logger.info(f"Context length: {len(context)} characters")
 
         # Prepare chat transcript
-        app_logger.info("Preparing chat transcript...")
         chat_transcript = "\n".join([f"{'You' if msg['user_type'] == 'bot' or msg['user_type'] == 'bot_button' else 'Visitor'}: {msg['text'].strip()}" for msg in history])
-        app_logger.info(f"Chat transcript length: {len(chat_transcript)} characters")
 
-        # Try to read system prompt
-        app_logger.info("Loading system prompt...")
-        try:
-            with open('app/system_prompt.txt', 'r', encoding='utf-8') as f:
-                prompt_template = f.read()
-            app_logger.info("System prompt loaded successfully")
-        except (FileNotFoundError, IOError, PermissionError) as e:
-            app_logger.error(f"Failed to read system prompt file: {e}")
-            raise HTTPException(
-                status_code=500,
-                detail="Failed to load system prompt configuration"
-            )
-
-        if not prompt_template or prompt_template.strip() == "":
+        if not system_prompt_template or system_prompt_template.strip() == "":
             app_logger.error("System prompt is empty")
             raise HTTPException(
                 status_code=500,
                 detail="System prompt configuration is empty"
             )
 
-        system_prompt = prompt_template.format(services=services)
-        app_logger.info(f"System prompt prepared, length: {len(system_prompt)} characters")
-
-        # Try to read user prompt
-        app_logger.info("Loading user prompt template...")
-        try:
-            with open('app/user_prompt.txt', 'r', encoding='utf-8') as f:
-                user_prompt_template = f.read()
-            app_logger.info("User prompt template loaded successfully")
-        except (FileNotFoundError, IOError, PermissionError) as e:
-            app_logger.error(f"Failed to read user prompt file: {e}")
-            raise HTTPException(
-                status_code=500,
-                detail="Failed to load user prompt configuration"
-            )
+        system_prompt = system_prompt_template.format(services=services)
 
         if not user_prompt_template or user_prompt_template.strip() == "":
             app_logger.error("User prompt template is empty")
@@ -253,16 +226,13 @@ async def chat_endpoint(
             )
 
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
-        app_logger.info(f"User prompt prepared, length: {len(user_prompt)} characters")
 
         # Call LLM
-        app_logger.info("Invoking LLM...")
         try:
             response = chat.invoke([
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ])
-            app_logger.info("LLM invocation successful")
         except Exception as e:
             app_logger.error(f"LLM invocation failed: {e}")
             raise HTTPException(
@@ -277,10 +247,7 @@ async def chat_endpoint(
                 detail="Failed to generate response from AI model"
             )
 
-        app_logger.info(f"LLM response received, length: {len(response.content)} characters")
-
         # Parse LLM response
-        app_logger.info("Parsing LLM response...")
         try:
             reply_data = json.loads(response.content)
             app_logger.info("LLM response parsed successfully")
@@ -289,10 +256,10 @@ async def chat_endpoint(
             app_logger.error(f"Raw response: {response.content}")
             raise HTTPException(
                 status_code=500,
-                detail="Invalid response format from AI model"
+                detail=f"Invalid response format from AI model{e}"
             )
 
-        reply = reply_data.get("reply", "")
+        reply = reply_data.get("reply")
         if not reply or reply.strip() == "":
             app_logger.error("Reply is empty in LLM response")
             raise HTTPException(
@@ -300,25 +267,18 @@ async def chat_endpoint(
                 detail="AI model returned empty reply"
             )
 
-        app_logger.info(f"Reply extracted, length: {len(reply)} characters")
-
         # Extract response data
-        app_logger.info("Extracting response data...")
         contact_info = reply_data.get("contact_info", {})
         email = contact_info.get("email", "")
         classification = reply_data.get("classification", "").lower()
         decisionMaker = reply_data.get("decisionMaker", "")
         Budget = reply_data.get("Budget", "")
 
-        app_logger.info(f"Extracted data - Email: {'Yes' if email else 'No'}, Classification: {classification}, Decision Maker: {'Yes' if decisionMaker else 'No'}, Budget: {'Yes' if Budget else 'No'}")
-
         # Set sendToHubSpot flag
         if email != "" and classification == "qualified" and decisionMaker != "" and Budget != "":
             sendToHubspot = "Yes"
-            app_logger.info("Setting sendToHubspot = Yes (all qualification criteria met)")
         else:
             sendToHubspot = "No"
-            app_logger.info("Setting sendToHubspot = No (qualification criteria not met)")
 
         # Prepare final response
         final_response = {
@@ -336,7 +296,6 @@ async def chat_endpoint(
             "scoreReason": reply_data.get("scoreReason")
         }
 
-        app_logger.info("=== Chat request completed successfully ===")
         return final_response
 
     except HTTPException as e:
@@ -350,8 +309,3 @@ async def chat_endpoint(
             status_code=500,
             detail=f"Internal server error occurred: {e}"
         )
-
-# ------------------ Optional: Run with Uvicorn ------------------
-if __name__ == "__main__":
-    app_logger.info("Starting FastAPI server...")
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

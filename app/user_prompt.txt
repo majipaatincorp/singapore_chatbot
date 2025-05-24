@@ -13,7 +13,7 @@ Context you may need:
 
 📈 INTENT SCORING (Marketing Qualified Lead)
 
-- Evaluate only **Visitor** messages (ignore Your responses) using the following logic:
+- Evaluate only **Visitor's** messages (ignore Your responses) using the following logic:
 - Analyze ALL Visitor messages from the entire conversation.
 - intentScore should be the cumulative total score across the whole conversation
 - For each matched keyword, add a note in `scoreReason` using this format: `"keyword or phrase (+points)"`.
