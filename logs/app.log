@@ -302,3 +302,25 @@ AttributeError: module 'datetime' has no attribute 'fromisoformat'
 2025-05-24 19:50:16,838 - INFO - chatbot_logger - History length: 7
 2025-05-24 19:50:16,838 - INFO - chatbot_logger - Processing message: '3'
 2025-05-24 19:50:20,293 - INFO - chatbot_logger - LLM response parsed successfully
+2025-05-25 14:50:13,424 - INFO - chatbot_logger - Environment variables loaded
+2025-05-25 14:50:13,426 - INFO - chatbot_logger - FastAPI application initialized
+2025-05-25 14:50:13,426 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-05-25 14:50:14,140 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-05-25 14:50:14,140 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-05-25 14:50:14,140 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-05-25 14:50:25,742 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-05-25 14:50:25,742 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-05-25 14:50:25,893 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-05-25 14:50:25,893 - INFO - chatbot_logger - Setting up document retriever...
+2025-05-25 14:50:25,986 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-05-25 14:50:25,986 - INFO - chatbot_logger - Loading services configuration...
+2025-05-25 14:50:25,986 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-05-25 14:50:25,986 - INFO - chatbot_logger - Loading system prompt...
+2025-05-25 14:50:25,987 - INFO - chatbot_logger - System prompt loaded successfully
+2025-05-25 14:50:25,987 - INFO - chatbot_logger - Loading user prompt template...
+2025-05-25 14:50:25,987 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-05-25 15:21:42,104 - INFO - chatbot_logger - === New chat request received ===
+2025-05-25 15:21:42,104 - INFO - chatbot_logger - Message length: 1
+2025-05-25 15:21:42,104 - INFO - chatbot_logger - History length: 7
+2025-05-25 15:21:42,105 - INFO - chatbot_logger - Processing message: '3'
+2025-05-25 15:21:45,387 - INFO - chatbot_logger - LLM response parsed successfully
