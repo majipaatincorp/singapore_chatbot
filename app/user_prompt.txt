@@ -42,7 +42,7 @@ Always reply in this JSON format:
   "reply": "<your assistant reply>",
   "classification": "<Qualified | Unqualified | Not relevant>",
   "qualification_score": <0-30> (score by going through the user's choice of service(only one service), Lead Qualification Questions and Answers from the conversation and follow the LEAD QUALIFICATION scoring logic. `note: this is not INTENT score`),
-  "qualification_reason": [] (the keyword based on the lead qualification score, and the score for it),
+  "qualification_reason": ['interested topic'(score), 'timelineForIncorporation'(score), 'budget'(score), 'decisionMaker'(score)] (the keyword based on the lead qualification score, and the score for it),
   "lead_created": "<Yes | No>"(if name and email collected yes else no),
   "decisionMaker": "<Yes | No or empty string if not mentioned>",
   "timelineForIncorporation": "<Immediately | 30 Days | Not sure or empty string if not mentioned>",
