@@ -24,10 +24,15 @@ from azure.search.documents.indexes.models import (
     SearchSuggester
 )
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 # connection creds
-endpoint = "https://icg-uat-sea-ais-01.search.windows.net"
-key = "ikSTjQ4xbhQiUFawjqBK3sDzcaY0x2UT7AUmj8uUmjAzSeBfl7t9"
+endpoint = os.environ.get("endpoint")
+key = os.environ.get("key")
 index_name = "chatbot_knowledge"
 credential = AzureKeyCredential(key)
 
