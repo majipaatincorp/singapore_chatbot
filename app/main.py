@@ -301,7 +301,6 @@ async def chat_endpoint(
             "intentScore": reply_data.get("intentScore"),
             "scoreReason": reply_data.get("scoreReason")
         }
-        print(final_response)
         return final_response
 
     except HTTPException as e:

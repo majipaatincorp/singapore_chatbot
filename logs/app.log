@@ -540,3 +540,120 @@ AttributeError: module 'datetime' has no attribute 'fromisoformat'
 2025-06-23 10:52:56,046 - INFO - chatbot_logger - History length: 22
 2025-06-23 10:52:56,047 - INFO - chatbot_logger - Processing message: 'nope'
 2025-06-23 10:52:58,385 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 10:54:41,115 - INFO - chatbot_logger - Environment variables loaded
+2025-06-23 10:54:41,116 - INFO - chatbot_logger - FastAPI application initialized
+2025-06-23 10:54:41,116 - INFO - chatbot_logger - Initializing Azure OpenAI client...
+2025-06-23 10:54:41,608 - INFO - chatbot_logger - Azure OpenAI client initialized successfully
+2025-06-23 10:54:41,609 - INFO - chatbot_logger - API_SECRET loaded from environment
+2025-06-23 10:54:41,609 - INFO - chatbot_logger - Loading HuggingFace embeddings...
+2025-06-23 10:54:52,863 - INFO - chatbot_logger - HuggingFace embeddings loaded successfully
+2025-06-23 10:54:52,864 - INFO - chatbot_logger - Loading Chroma vector database...
+2025-06-23 10:54:52,966 - INFO - chatbot_logger - Chroma vector database loaded successfully
+2025-06-23 10:54:52,966 - INFO - chatbot_logger - Setting up document retriever...
+2025-06-23 10:54:53,000 - INFO - chatbot_logger - Loaded vector store with 4358 documents
+2025-06-23 10:54:53,001 - INFO - chatbot_logger - Loading services configuration...
+2025-06-23 10:54:53,001 - INFO - chatbot_logger - Services configuration loaded with 9 services
+2025-06-23 10:54:53,001 - INFO - chatbot_logger - Loading system prompt...
+2025-06-23 10:54:53,002 - INFO - chatbot_logger - System prompt loaded successfully
+2025-06-23 10:54:53,002 - INFO - chatbot_logger - Loading user prompt template...
+2025-06-23 10:54:53,003 - INFO - chatbot_logger - User prompt template loaded successfully
+2025-06-23 10:54:56,093 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 10:54:56,093 - INFO - chatbot_logger - Message length: 8
+2025-06-23 10:54:56,093 - INFO - chatbot_logger - History length: 24
+2025-06-23 10:54:56,094 - INFO - chatbot_logger - Processing message: 'thankyou'
+2025-06-23 10:54:59,760 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 10:55:43,836 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 10:55:43,836 - INFO - chatbot_logger - Message length: 43
+2025-06-23 10:55:43,836 - INFO - chatbot_logger - History length: 2
+2025-06-23 10:55:43,836 - INFO - chatbot_logger - Processing message: 'what are the services that incorp provides?'
+2025-06-23 10:55:46,841 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 11:30:40,381 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 11:30:40,382 - INFO - chatbot_logger - Message length: 31
+2025-06-23 11:30:40,382 - INFO - chatbot_logger - History length: 2
+2025-06-23 11:30:40,382 - INFO - chatbot_logger - Processing message: 'how to setup new company in Sg?'
+2025-06-23 11:30:44,909 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 13:33:20,429 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 13:33:20,430 - INFO - chatbot_logger - Message length: 2
+2025-06-23 13:33:20,430 - INFO - chatbot_logger - History length: 2
+2025-06-23 13:33:20,430 - INFO - chatbot_logger - Processing message: 'hi'
+2025-06-23 13:33:24,544 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:29:40,747 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:29:40,747 - INFO - chatbot_logger - Message length: 40
+2025-06-23 15:29:40,747 - INFO - chatbot_logger - History length: 2
+2025-06-23 15:29:40,747 - INFO - chatbot_logger - Processing message: 'I need help with incorporating a company'
+2025-06-23 15:29:45,214 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:30:22,337 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:30:22,338 - INFO - chatbot_logger - Message length: 44
+2025-06-23 15:30:22,338 - INFO - chatbot_logger - History length: 4
+2025-06-23 15:30:22,338 - INFO - chatbot_logger - Processing message: 'I want to incorporate a company in Singapore'
+2025-06-23 15:30:26,576 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:30:36,593 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:30:36,594 - INFO - chatbot_logger - Message length: 10
+2025-06-23 15:30:36,594 - INFO - chatbot_logger - History length: 6
+2025-06-23 15:30:36,595 - INFO - chatbot_logger - Processing message: 'yes please'
+2025-06-23 15:30:40,412 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:30:52,879 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:30:52,879 - INFO - chatbot_logger - Message length: 1
+2025-06-23 15:30:52,880 - INFO - chatbot_logger - History length: 8
+2025-06-23 15:30:52,880 - INFO - chatbot_logger - Processing message: '1'
+2025-06-23 15:30:56,641 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:33:07,805 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:33:07,805 - INFO - chatbot_logger - Message length: 1
+2025-06-23 15:33:07,805 - INFO - chatbot_logger - History length: 10
+2025-06-23 15:33:07,806 - INFO - chatbot_logger - Processing message: '2'
+2025-06-23 15:33:12,861 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:33:20,795 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:33:20,796 - INFO - chatbot_logger - Message length: 1
+2025-06-23 15:33:20,796 - INFO - chatbot_logger - History length: 12
+2025-06-23 15:33:20,796 - INFO - chatbot_logger - Processing message: '2'
+2025-06-23 15:33:23,890 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:33:30,187 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:33:30,187 - INFO - chatbot_logger - Message length: 8
+2025-06-23 15:33:30,188 - INFO - chatbot_logger - History length: 14
+2025-06-23 15:33:30,188 - INFO - chatbot_logger - Processing message: 'Rajkumar'
+2025-06-23 15:33:34,166 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:33:57,827 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:33:57,827 - INFO - chatbot_logger - Message length: 18
+2025-06-23 15:33:57,827 - INFO - chatbot_logger - History length: 16
+2025-06-23 15:33:57,828 - INFO - chatbot_logger - Processing message: 'rajkumar@gmail.com'
+2025-06-23 15:34:02,344 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:34:14,367 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:34:14,367 - INFO - chatbot_logger - Message length: 36
+2025-06-23 15:34:14,367 - INFO - chatbot_logger - History length: 18
+2025-06-23 15:34:14,368 - INFO - chatbot_logger - Processing message: 'I dont want to give the phone number'
+2025-06-23 15:34:19,617 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 15:34:43,832 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 15:34:43,832 - INFO - chatbot_logger - Message length: 44
+2025-06-23 15:34:43,832 - INFO - chatbot_logger - History length: 20
+2025-06-23 15:34:43,832 - INFO - chatbot_logger - Processing message: 'Can you tell me about trademark in singapore'
+2025-06-23 15:34:48,816 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:32:27,565 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:32:27,567 - INFO - chatbot_logger - Message length: 41
+2025-06-23 16:32:27,567 - INFO - chatbot_logger - History length: 2
+2025-06-23 16:32:27,567 - INFO - chatbot_logger - Processing message: 'would like to open a company in hong kong'
+2025-06-23 16:32:34,116 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:32:46,327 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:32:46,328 - INFO - chatbot_logger - Message length: 10
+2025-06-23 16:32:46,328 - INFO - chatbot_logger - History length: 4
+2025-06-23 16:32:46,329 - INFO - chatbot_logger - Processing message: 'the former'
+2025-06-23 16:32:49,960 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:32:56,916 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:32:56,917 - INFO - chatbot_logger - Message length: 4
+2025-06-23 16:32:56,918 - INFO - chatbot_logger - History length: 6
+2025-06-23 16:32:56,918 - INFO - chatbot_logger - Processing message: 'sure'
+2025-06-23 16:33:00,569 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:33:08,269 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:33:08,269 - INFO - chatbot_logger - Message length: 1
+2025-06-23 16:33:08,272 - INFO - chatbot_logger - History length: 8
+2025-06-23 16:33:08,274 - INFO - chatbot_logger - Processing message: '3'
+2025-06-23 16:33:11,488 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:35:02,739 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:35:02,740 - INFO - chatbot_logger - Message length: 1
+2025-06-23 16:35:02,740 - INFO - chatbot_logger - History length: 10
+2025-06-23 16:35:02,740 - INFO - chatbot_logger - Processing message: '1'
+2025-06-23 16:35:06,548 - INFO - chatbot_logger - LLM response parsed successfully
+2025-06-23 16:35:15,927 - INFO - chatbot_logger - === New chat request received ===
+2025-06-23 16:35:15,927 - INFO - chatbot_logger - Message length: 1
+2025-06-23 16:35:15,928 - INFO - chatbot_logger - History length: 12
+2025-06-23 16:35:15,928 - INFO - chatbot_logger - Processing message: '1'
+2025-06-23 16:35:19,936 - INFO - chatbot_logger - LLM response parsed successfully
