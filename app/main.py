@@ -231,8 +231,7 @@ async def chat_endpoint(
             )
 
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
-        print(user_prompt)
-        # Call LLM
+         # Call LLM
         try:
             response = chat.invoke([
                 {"role": "system", "content": system_prompt},
@@ -288,6 +287,8 @@ async def chat_endpoint(
         # Prepare final response
         final_response = {
             "reply": reply,
+            "qualification_score": reply_data.get("qualification_score"),
+            "qualification_reason": reply_data.get("qualification_reason"),
             "attributes": {
                 "decisionMaker": reply_data.get("decisionMaker"),
                 "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
@@ -300,7 +301,7 @@ async def chat_endpoint(
             "intentScore": reply_data.get("intentScore"),
             "scoreReason": reply_data.get("scoreReason")
         }
-
+        print(final_response)
         return final_response
 
     except HTTPException as e:
