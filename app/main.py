@@ -31,7 +31,7 @@ try:
         deployment_name=os.environ.get("deployment_name"),
         openai_api_key=os.environ.get("openai_api_key"),
         openai_api_type=os.environ.get("openai_api_type"),
-        temperature=0.3,
+        temperature=0.0,
         response_format={"type": "json_object"}
     )
     app_logger.info("Azure OpenAI client initialized successfully")
