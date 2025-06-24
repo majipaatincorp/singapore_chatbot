@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import json
 from datetime import datetime
-
+from langchain_community.callbacks import get_openai_callback
 from langchain_community.chat_models import AzureChatOpenAI
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -221,7 +221,7 @@ async def chat_endpoint(
                 detail="System prompt configuration is empty"
             )
 
-        system_prompt = system_prompt_template.format(services=services)
+        system_prompt = system_prompt_template# .format(services=services)
 
         if not user_prompt_template or user_prompt_template.strip() == "":
             app_logger.error("User prompt template is empty")
@@ -233,10 +233,20 @@ async def chat_endpoint(
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
          # Call LLM
         try:
-            response = chat.invoke([
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ])
+            with get_openai_callback() as cb:
+                response = chat.invoke(
+                [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                stop=["\n\n", "User:"]
+                )
+
+            # response = chat.invoke([
+            #     {"role": "system", "content": system_prompt},
+            #     {"role": "user", "content": user_prompt},
+                
+            # ])
         except Exception as e:
             app_logger.error(f"LLM invocation failed: {e}")
             raise HTTPException(
@@ -301,6 +311,11 @@ async def chat_endpoint(
             "intentScore": reply_data.get("intentScore"),
             "scoreReason": reply_data.get("scoreReason")
         }
+        #
+        print(f"Total Tokens: {cb.total_tokens}")
+        print(f"Prompt Tokens: {cb.prompt_tokens}")
+        print(f"Completion Tokens: {cb.completion_tokens}")
+        print(f"Total Cost (USD): ${cb.total_cost}")
         return final_response
 
     except HTTPException as e:
