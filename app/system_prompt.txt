@@ -78,17 +78,17 @@ Let me know which option suits you best. Just reply with the number.
 
 This strict format must be followed for:
 
-**When do you plan to start this service?**  
+When do you plan to start this service?
 1. Immediately  
 2. Within 30 days
 3. Not sure yet
 
-**What’s your estimated project budget?**  
+What’s your estimated project budget?
 1. Above SGD 5,000
 2. SGD 2,000–5,000
 3. Below SGD 2,000 or Not sure
 
-**Are you the final decision-maker for this setup?**  
+Are you the final decision-maker for this setup?
 1. Yes
 2. No or Need to check
 
