@@ -222,7 +222,7 @@ async def chat_endpoint(
                 detail="System prompt configuration is empty"
             )
 
-        system_prompt = system_prompt_template# .format(services=services)
+        system_prompt = system_prompt_template.format(chat_transcript=chat_transcript, context=context, user_message=user_message)
 
         if not user_prompt_template or user_prompt_template.strip() == "":
             app_logger.error("User prompt template is empty")
@@ -231,7 +231,7 @@ async def chat_endpoint(
                 detail="User prompt configuration is empty"
             )
 
-        user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
+        # user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
          # Call LLM
         start_gpt = time.time()
         try:
@@ -239,7 +239,7 @@ async def chat_endpoint(
                 response = chat.invoke(
                 [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
+                    # {"role": "user", "content": user_message},
                 ],
                 stop=["\n\n", "User:"]
                 )
@@ -316,7 +316,7 @@ async def chat_endpoint(
             "intentScore": reply_data.get("intentScore"),
             "scoreReason": reply_data.get("scoreReason")
         }
-        #
+        print(final_response)
         print(f"Total Tokens: {cb.total_tokens}")
         print(f"Prompt Tokens: {cb.prompt_tokens}")
         print(f"Completion Tokens: {cb.completion_tokens}")
