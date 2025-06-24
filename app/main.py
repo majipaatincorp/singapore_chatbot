@@ -9,6 +9,7 @@ from langchain_community.callbacks import get_openai_callback
 from langchain_community.chat_models import AzureChatOpenAI
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
+import time
 
 from app.auth_utils import verify_auth
 from app.logger import logger
@@ -67,7 +68,7 @@ except Exception as e:
 
 app_logger.info("Setting up document retriever...")
 try:
-    retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": 10})
+    retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": 5})
     doc_count = vector_db._collection.count()
     if doc_count == 0:
         app_logger.warning("Vector database is empty - no documents loaded")
@@ -232,6 +233,7 @@ async def chat_endpoint(
 
         user_prompt = user_prompt_template.format(chat_transcript=chat_transcript, user_message=user_message, context=context)
          # Call LLM
+        start_gpt = time.time()
         try:
             with get_openai_callback() as cb:
                 response = chat.invoke(
@@ -247,6 +249,9 @@ async def chat_endpoint(
             #     {"role": "user", "content": user_prompt},
                 
             # ])
+            end_gpt = time.time()
+            print(f"GPT-4o response time: {end_gpt - start_gpt:.3f} seconds")
+
         except Exception as e:
             app_logger.error(f"LLM invocation failed: {e}")
             raise HTTPException(
