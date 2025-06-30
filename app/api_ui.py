@@ -10,6 +10,7 @@ import chainlit as cl
 HMAC_SECRET = "5z1OCulNuL8MA4qTzr9g9xRvM3VwiJSPHdmqXOgAqWM0mcYotxsWJQQJ99BEACHYHv6XJ3w3AAAAACOGm8RX"
 API_URL = "http://localhost:8000/chat"
 AGENT_NAME = "Chatbot"
+# API_URL = "http://localhost:7071/chat"
 
 
 # HMAC Signature Generator

@@ -1,6 +1,18 @@
 from pathlib import Path
 import logging
 import sys
+import json
+from datetime import datetime, timezone
+
+
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        return json.dumps({
+            "timestamp": datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat(),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "logger": record.name
+        })
 
 # Ensure logs/ directory exists
 log_dir = Path("logs")
@@ -12,7 +24,7 @@ logger = logging.getLogger("chatbot_logger")
 logger.setLevel(logging.INFO)  # Or DEBUG, if you want more verbosity
 
 # Formatter
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(message)s')
+formatter = JSONFormatter()
 
 # File handler
 file_handler = logging.FileHandler(log_file, mode='a')
