@@ -271,7 +271,7 @@ async def chat_endpoint(
 
         reply = reply_data.get("reply")
         if not reply or reply.strip() == "":
-            app_logger.error("Reply is empty in LLM response")
+            app_logger.error("Status Code: 500, Reply is empty in LLM response")
             raise HTTPException(
                 status_code=500,
                 detail="AI model returned empty reply"
@@ -280,12 +280,12 @@ async def chat_endpoint(
         # Extract response data
         contact_info = reply_data.get("contact_info", {})
         email = contact_info.get("email", "")
-        classification = reply_data.get("classification", "").lower()
+        phone = contact_info.get("phone", "")
         decisionMaker = reply_data.get("decisionMaker", "")
         Budget = reply_data.get("Budget", "")
 
         # Set sendToHubSpot flag
-        if email != "" and classification == "qualified" and decisionMaker != "" and Budget != "":
+        if phone != "" and email != ""  and decisionMaker != "" and Budget != "":
             sendToHubspot = "Yes"
         else:
             sendToHubspot = "No"
@@ -300,18 +300,15 @@ async def chat_endpoint(
                 "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
                 "Budget": reply_data.get("Budget")
             },
-            "keywords": reply_data.get("keywords"),
             "contact_info": reply_data.get("contact_info"),
             "sendToHubspot": sendToHubspot,
-            "shouldYouContact": reply_data.get("shouldYouContact"),
-            "intentScore": reply_data.get("intentScore"),
-            "scoreReason": reply_data.get("scoreReason")
-        }
+            "shouldYouContact": reply_data.get("shouldYouContact")
+         }
         # print(f"Total Tokens: {cb.total_tokens}")
         # print(f"Prompt Tokens: {cb.prompt_tokens}")
         # print(f"Completion Tokens: {cb.completion_tokens}")
         # print(f"Total Cost (USD): ${cb.total_cost}")
-        # print(final_response)
+        print(final_response)
         app_logger.info("Request processing complete. Sending final response...")
         return final_response
 
