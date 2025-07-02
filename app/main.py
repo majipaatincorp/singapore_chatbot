@@ -285,7 +285,7 @@ async def chat_endpoint(
         Budget = reply_data.get("Budget", "")
 
         # Set sendToHubSpot flag
-        if phone != "" and email != ""  and decisionMaker != "" and Budget != "":
+        if email != ""  and decisionMaker != "" and Budget != "":
             sendToHubspot = "Yes"
         else:
             sendToHubspot = "No"

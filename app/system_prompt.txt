@@ -218,7 +218,7 @@ Always reply in this JSON format:
   "shouldYouContact": "<Yes | No>"(Default Yes, if the user does not want to be contacted, set it to No),
   "contact_info": {{
     "name": "<name>",
-    "email": "<email> or empty string if not mentioned or <not provided> if user denies to provide it>",
-    "phone": "<phone> or empty string if not mentioned or <not provided> if user denies to provide it>"
+    "email": "<email>",
+    "phone": "<phone>"
   }}
 }}
