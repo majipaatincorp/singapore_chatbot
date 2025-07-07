@@ -308,8 +308,10 @@ async def chat_endpoint(
         # print(f"Prompt Tokens: {cb.prompt_tokens}")
         # print(f"Completion Tokens: {cb.completion_tokens}")
         # print(f"Total Cost (USD): ${cb.total_cost}")
-        print(final_response)
-        app_logger.info("Request processing complete. Sending final response...")
+        # print(final_response)
+        app_logger.info(str(final_response))
+        app_logger.info("Request processing complete.")
+        app_logger.info("=== Final response sent. ===")
         return final_response
 
     except HTTPException as e:

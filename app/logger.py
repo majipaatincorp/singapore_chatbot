@@ -3,6 +3,25 @@ import logging
 import sys
 import json
 from datetime import datetime, timezone
+from azure.monitor.opentelemetry import configure_azure_monitor
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+
+# Configure Azure Monitor - this is the modern way
+connection_string = os.environ.get('APPLICATIONINSIGHTS_CONNECTION_STRING')
+if connection_string:
+    configure_azure_monitor(
+        connection_string=connection_string,
+        enable_logging=True,
+        logging_level=logging.INFO
+    )
+    print("Application Insights configured successfully")
+else:
+    print("Warning: APPLICATIONINSIGHTS_CONNECTION_STRING not found")
 
 
 class JSONFormatter(logging.Formatter):
@@ -15,9 +34,9 @@ class JSONFormatter(logging.Formatter):
         })
 
 # Ensure logs/ directory exists
-log_dir = Path("logs")
-log_dir.mkdir(parents=True, exist_ok=True)
-log_file = log_dir / "app.log"
+# log_dir = Path("logs")
+# log_dir.mkdir(parents=True, exist_ok=True)
+# log_file = log_dir / "app.log"
 
 # Create logger
 logger = logging.getLogger("chatbot_logger")
@@ -27,9 +46,9 @@ logger.setLevel(logging.INFO)  # Or DEBUG, if you want more verbosity
 formatter = JSONFormatter()
 
 # File handler
-file_handler = logging.FileHandler(log_file, mode='a')
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(formatter)
+# file_handler = logging.FileHandler(log_file, mode='a')
+# file_handler.setLevel(logging.INFO)
+# file_handler.setFormatter(formatter)
 
 # Stream handler (stdout, for Azure App Service)
 stream_handler = logging.StreamHandler(sys.stdout)
@@ -37,9 +56,13 @@ stream_handler.setLevel(logging.INFO)
 stream_handler.setFormatter(formatter)
 
 # Avoid adding duplicate handlers
-if not logger.hasHandlers():
-    logger.addHandler(file_handler)
-    logger.addHandler(stream_handler)
+# if not logger.hasHandlers():
+# logger.addHandler(file_handler)
 
-# Optional: prevent logs from propagating to root logger
-logger.propagate = False
+logger.addHandler(stream_handler)
+logger.addHandler(stream_handler)
+logger.propagate = True 
+
+# Also create a root logger for Azure Monitor
+# root_logger = logging.getLogger()
+# root_logger.setLevel(logging.INFO)

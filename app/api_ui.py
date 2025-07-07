@@ -6,9 +6,14 @@ import uuid
 import time
 import requests
 import chainlit as cl
+import os
 
-HMAC_SECRET = "5z1OCulNuL8MA4qTzr9g9xRvM3VwiJSPHdmqXOgAqWM0mcYotxsWJQQJ99BEACHYHv6XJ3w3AAAAACOGm8RX"
+
+
+
+HMAC_SECRET = os.getenv("API_SECRET") 
 API_URL = "http://localhost:8000/chat"
+# API_URL = "https://icg-uat-wa-cbgenai-01.azurewebsites.net/chat"
 AGENT_NAME = "Chatbot"
 # API_URL = "http://localhost:7071/chat"
 
@@ -80,6 +85,7 @@ async def handle_message(message: cl.Message):
         # Send request
         response = requests.post(API_URL, json=payload, headers=headers)
         response.raise_for_status()
+        print(response.json())
         bot_reply = response.json().get("reply", "Sorry, I didn’t get a response.")
 
     except Exception as e:
