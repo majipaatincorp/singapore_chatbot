@@ -291,7 +291,7 @@ async def chat_endpoint(
             sendToHubspot = False
 
         # Set liveChat flag
-        if phone != "" and sendToHubspot:
+        if phone != "" and sendToHubspot and reply_data.get("qualification_score")>=30:
             transferToLiveChat = True
         else:
             transferToLiveChat = False
