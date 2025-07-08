@@ -286,15 +286,15 @@ async def chat_endpoint(
 
         # Set sendToHubSpot flag
         if email != "" and decisionMaker != "" and Budget != "":
-            sendToHubspot = "Yes"
+            sendToHubspot = True
         else:
-            sendToHubspot = "No"
+            sendToHubspot = False
 
         # Set liveChat flag
-        if phone != "" and sendToHubspot == "Yes":
-            liveChat = "Yes"
+        if phone != "" and sendToHubspot:
+            transferToLiveChat = True
         else:
-            liveChat = "No"
+            transferToLiveChat = False
 
         # Prepare final response
         final_response = {
@@ -309,7 +309,7 @@ async def chat_endpoint(
             "contact_info": reply_data.get("contact_info"),
             "sendToHubspot": sendToHubspot,
             "shouldYouContact": reply_data.get("shouldYouContact"),
-            "liveChat": liveChat
+            "transferToLiveChat": transferToLiveChat 
         }
         # print(f"Total Tokens: {cb.total_tokens}")
         # print(f"Prompt Tokens: {cb.prompt_tokens}")

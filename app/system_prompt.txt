@@ -220,7 +220,7 @@ Always reply in this JSON format:
   "decisionMaker": "<Yes | No or empty string if not mentioned>",
   "timelineForIncorporation": "<Immediately | 30 Days | Not sure or empty string if not mentioned>",
   "Budget": "<below $2000 | $2000–$5000 | above $5000 or empty string if not mentioned>",
-  "shouldYouContact": "<Yes | No>"(Default Yes, if the user does not want to be contacted, set it to No),
+  "shouldYouContact": "<True | False>"(Default True Boolean, if the user does not want to be contacted, set it to False),
   "contact_info": {{
     "name": "<name>",
     "email": "<email>",
