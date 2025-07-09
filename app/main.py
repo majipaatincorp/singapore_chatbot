@@ -302,6 +302,7 @@ async def chat_endpoint(
             "qualification_score": reply_data.get("qualification_score"),
             "qualification_reason": reply_data.get("qualification_reason"),
             "attributes": {
+                "interestedTopic": reply_data.get("interestedTopic"),
                 "decisionMaker": reply_data.get("decisionMaker"),
                 "timelineForIncorporation": reply_data.get("timelineForIncorporation"),
                 "Budget": reply_data.get("Budget")
