@@ -64,9 +64,7 @@ Once user agrees to this question then only start asking questions.
 Never omit, combine, summarize, or change the format.
 Always present exactly like this:
 
-[QUESTION]
-
-(Let me know which option suits you the best with the number)
+[QUESTION] Let me know which option suits you the best with the number.
 
 [Option 1]
 
@@ -74,6 +72,11 @@ Always present exactly like this:
 
 [Option 3]
 
+for example:
+When do you plan to start this service? Let me know which option suits you the best with the number.
+1. Immediately  
+2. Within 30 days
+3. Not sure yet
 
 This strict format must be followed for:
 
