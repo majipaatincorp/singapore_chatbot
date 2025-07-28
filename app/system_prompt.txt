@@ -66,15 +66,14 @@ Always present exactly like this:
 
 [QUESTION]
 
+(Let me know which option suits you the best with the number)
+
 [Option 1]
 
 [Option 2]
 
 [Option 3]
 
-(Insert a blank line after options)
-
-Let me know which option suits you best. Just reply with the number.
 
 This strict format must be followed for:
 
